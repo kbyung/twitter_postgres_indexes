@@ -22,8 +22,10 @@ echo '==========================================================================
 # The only difference between pg_normalized and pg_normalized_batch is how the data is loaded.
 # Since pg_normalized_batch is faster,
 # we will use that code to load the data.
+time echo "$files" | parallel ./load_denormalized.sh
 
 echo '================================================================================'
 echo 'load pg_normalized_batch'
 echo '================================================================================'
 # FIXME: copy your solution to the previous problem here
+time parallel python3 -u load_tweets_batch.py --db=postgresql://postgres:pass@localhost:10372/ --inputs {} ::: $files 
